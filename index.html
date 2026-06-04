@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ituang — Download</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0f18;
+      --card: #161926;
+      --border: rgba(255,255,255,0.08);
+      --accent: #6366f1;
+      --accent2: #8b5cf6;
+      --text: #e2e8f0;
+      --muted: #64748b;
+      --green: #22c55e;
+      --red: #ef4444;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px 80px;
+      overflow-x: hidden;
+    }
+
+    /* ── Starfield background ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 30%, rgba(99,102,241,0.12) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 70%, rgba(139,92,246,0.10) 0%, transparent 55%);
+      pointer-events: none; z-index: 0;
+    }
+
+    .page { position: relative; z-index: 1; width: 100%; max-width: 700px; }
+
+    /* ── Header ── */
+    .header {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+    .logo-wrap {
+      display: inline-flex; align-items: center; gap: 14px;
+      margin-bottom: 16px;
+    }
+    .logo-icon {
+      width: 56px; height: 56px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px;
+      box-shadow: 0 8px 24px rgba(99,102,241,0.4);
+    }
+    .logo-name {
+      font-size: 36px; font-weight: 900;
+      background: linear-gradient(135deg, #6366f1, #a78bfa);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .header-sub {
+      font-size: 15px; color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── Meme card ── */
+    .meme-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 24px;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+    }
+    .meme-card img {
+      width: 100%; display: block;
+      max-height: 380px; object-fit: cover;
+    }
+    .meme-caption {
+      padding: 14px 20px;
+      font-size: 14px; color: var(--muted);
+      text-align: center; font-style: italic;
+    }
+
+    /* ── App info card ── */
+    .info-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px 32px;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+    .info-title {
+      font-size: 18px; font-weight: 700;
+      margin-bottom: 20px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .info-item {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+    }
+    .info-item-label {
+      font-size: 10px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      color: var(--muted); margin-bottom: 4px;
+    }
+    .info-item-value {
+      font-size: 15px; font-weight: 600; color: var(--text);
+    }
+    .info-item-value .badge {
+      display: inline-block;
+      background: rgba(34,197,94,0.15);
+      color: #4ade80;
+      border: 1px solid rgba(34,197,94,0.3);
+      border-radius: 6px;
+      padding: 2px 8px;
+      font-size: 12px;
+    }
+    .req-list {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .req-list li {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 13px; color: var(--muted);
+    }
+    .req-list li::before {
+      content: '✅'; font-size: 14px;
+    }
+
+    /* ── Download section ── */
+    .download-section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    .download-section::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(99,102,241,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .dl-title {
+      font-size: 22px; font-weight: 800;
+      margin-bottom: 6px;
+    }
+    .dl-sub {
+      font-size: 13px; color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    /* ── THE DODGY BUTTON ── */
+    .btn-download-wrap {
+      position: relative;
+      height: 120px;
+      margin-bottom: 16px;
+    }
+    #btn-download {
+      position: absolute;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border: none;
+      border-radius: 14px;
+      padding: 16px 40px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 16px; font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(99,102,241,0.4);
+      transition: box-shadow 0.2s;
+      white-space: nowrap;
+      transform: translate(-50%, -50%);
+      left: 50%; top: 50%;
+    }
+    #btn-download:hover {
+      box-shadow: 0 12px 36px rgba(99,102,241,0.6);
+    }
+    #btn-download.settled {
+      position: relative;
+      left: auto; top: auto;
+      transform: none;
+      width: 100%;
+      animation: settleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      margin: 0 auto;
+      display: block;
+    }
+    @keyframes settleIn {
+      from { transform: scale(0.8); opacity: 0.5; }
+      to   { transform: scale(1); opacity: 1; }
+    }
+
+    /* ── Secret input ── */
+    #secret-section {
+      display: none;
+      margin-top: 8px;
+      animation: fadeIn 0.5s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .secret-label {
+      font-size: 13px; color: var(--muted);
+      margin-bottom: 10px; line-height: 1.5;
+    }
+    .secret-label strong { color: var(--text); }
+    .secret-input-wrap {
+      display: flex; gap: 8px;
+    }
+    #secret-input {
+      flex: 1;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 11px 16px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px; color: var(--text);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    #secret-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(99,102,241,0.2);
+    }
+    #secret-input.wrong {
+      border-color: var(--red);
+      animation: shake 0.4s;
+    }
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      20%,60%  { transform: translateX(-6px); }
+      40%,80%  { transform: translateX(6px); }
+    }
+    #btn-unlock {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border: none; border-radius: 10px;
+      padding: 11px 20px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px; font-weight: 600;
+      color: #fff; cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    #btn-unlock:hover { opacity: 0.85; }
+
+    .secret-hint {
+      font-size: 11px; color: var(--muted);
+      margin-top: 8px; display: none;
+    }
+
+    #success-msg {
+      display: none;
+      margin-top: 16px;
+      padding: 12px 20px;
+      background: rgba(34,197,94,0.1);
+      border: 1px solid rgba(34,197,94,0.3);
+      border-radius: 10px;
+      color: #4ade80;
+      font-size: 14px; font-weight: 600;
+      animation: fadeIn 0.4s ease;
+    }
+
+    /* ── HACKING PAGE ── */
+    #hack-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: #000;
+      z-index: 9999;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      font-family: 'Share Tech Mono', monospace;
+    }
+    #hack-overlay.active { display: flex; }
+    .hack-terminal {
+      width: 100%; max-width: 860px;
+      background: #0a0a0a;
+      border: 1px solid #1a1a1a;
+      border-radius: 8px;
+      padding: 24px 28px;
+      overflow: hidden;
+    }
+    .hack-topbar {
+      display: flex; align-items: center; gap: 8px;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    .hack-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .hack-title {
+      color: #444; font-size: 13px; margin-left: auto;
+    }
+    #hack-log {
+      color: #00ff41;
+      font-size: 13px;
+      line-height: 1.9;
+      min-height: 300px;
+    }
+    .hack-line { display: block; }
+    .hack-line.red   { color: #ff3333; }
+    .hack-line.yellow { color: #ffcc00; }
+    .hack-line.cyan  { color: #00ffff; }
+    .hack-line.white { color: #ffffff; font-weight: bold; }
+    .hack-blink {
+      display: inline-block;
+      animation: blink 0.8s step-end infinite;
+    }
+    @keyframes blink {
+      0%,100% { opacity: 1; } 50% { opacity: 0; }
+    }
+    .hack-progress-bar {
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 4px;
+      height: 20px;
+      margin: 8px 0;
+      overflow: hidden;
+    }
+    .hack-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #ff0000, #ff6600, #ff0000);
+      background-size: 200% 100%;
+      animation: hack-scan 0.8s linear infinite;
+      transition: width 0.3s;
+    }
+    @keyframes hack-scan {
+      0%   { background-position: 0% 0%; }
+      100% { background-position: 200% 0%; }
+    }
+    #hack-progress-text { color: #ff3333; }
+
+    /* ── TAPI BOONG reveal ── */
+    #boong-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.97);
+      z-index: 10000;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px;
+      animation: fadeIn 0.6s ease;
+    }
+    #boong-overlay.active { display: flex; }
+    #boong-overlay img {
+      max-width: 420px; width: 90%;
+      border-radius: 20px;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.8);
+      margin-bottom: 28px;
+      animation: bouncePop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    @keyframes bouncePop {
+      from { transform: scale(0.5); opacity: 0; }
+      to   { transform: scale(1); opacity: 1; }
+    }
+    .boong-text {
+      font-size: 52px; font-weight: 900;
+      background: linear-gradient(135deg, #f59e0b, #ef4444, #ec4899);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: 16px;
+      animation: bouncePop 0.7s 0.1s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+    .boong-sub {
+      font-size: 18px; color: #94a3b8;
+      margin-bottom: 32px;
+      animation: fadeIn 0.5s 0.4s both;
+    }
+    #btn-continue {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border: none; border-radius: 14px;
+      padding: 16px 48px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 16px; font-weight: 700;
+      color: #fff; cursor: pointer;
+      box-shadow: 0 8px 24px rgba(99,102,241,0.5);
+      transition: transform 0.2s, box-shadow 0.2s;
+      animation: fadeIn 0.5s 0.6s both;
+    }
+    #btn-continue:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(99,102,241,0.6); }
+
+    /* ── Footer ── */
+    .footer {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 12px; color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ═══ HEADER ═══ -->
+  <div class="header">
+    <div class="logo-wrap">
+      <div class="logo-icon">💰</div>
+      <span class="logo-name">Ituang</span>
+    </div>
+    <p class="header-sub">Aplikasi manajemen keuangan pribadi yang simpel, cantik, dan gratis.<br>Khusus buat yang mau rapi tapi malas nulis di buku.</p>
+  </div>
+
+  <!-- ═══ MEME ═══ -->
+  <div class="meme-card">
+    <img src="meme_download.png" alt="Meme Ituang" />
+    <p class="meme-caption">bro percaya ga ini beneran gratis 😭</p>
+  </div>
+
+  <!-- ═══ APP INFO ═══ -->
+  <div class="info-card">
+    <div class="info-title">📦 Informasi Aplikasi</div>
+    <div class="info-grid">
+      <div class="info-item">
+        <div class="info-item-label">Nama</div>
+        <div class="info-item-value">Ituang</div>
+      </div>
+      <div class="info-item">
+        <div class="info-item-label">Versi</div>
+        <div class="info-item-value">1.0.0 <span class="badge">Stable</span></div>
+      </div>
+      <div class="info-item">
+        <div class="info-item-label">Ukuran</div>
+        <div class="info-item-value">~180 MB</div>
+      </div>
+      <div class="info-item">
+        <div class="info-item-label">Platform</div>
+        <div class="info-item-value">Windows 10/11 64-bit</div>
+      </div>
+    </div>
+    <ul class="req-list">
+      <li>Windows 10 atau Windows 11 (64-bit)</li>
+      <li>RAM minimal 2 GB (rekomendasi 4 GB)</li>
+      <li>Ruang kosong minimal 500 MB</li>
+      <li>Tidak perlu install apapun lagi — sudah all-in-one</li>
+    </ul>
+  </div>
+
+  <!-- ═══ DOWNLOAD SECTION ═══ -->
+  <div class="download-section">
+    <div class="dl-title">⬇️ Unduh Sekarang</div>
+    <p class="dl-sub" id="dl-sub-text">Gratis. Selamanya. Tanpa iklan. Tanpa berlangganan. Serius.</p>
+
+    <!-- Wrapper for dodgy button -->
+    <div class="btn-download-wrap" id="btn-wrap">
+      <button id="btn-download" onclick="handleDownloadClick()">
+        ⬇️ &nbsp;Unduh Ituang v1.0.0
+      </button>
+    </div>
+
+    <!-- Secret keyword section (appears after dodging) -->
+    <div id="secret-section">
+      <p class="secret-label">
+        😤 Capek ngejar tombolnya? Tenang.<br>
+        <strong>Kalau kamu punya kata kunci dari Surya, masukkan di sini:</strong>
+      </p>
+      <div class="secret-input-wrap">
+        <input id="secret-input" type="text" placeholder="Kata kunci rahasia..." />
+        <button id="btn-unlock" onclick="checkSecret()">Unlock</button>
+      </div>
+      <p class="secret-hint" id="secret-hint">❌ Kata kunci salah. Minta ke Surya dulu ya!</p>
+    </div>
+
+    <div id="success-msg">
+      ✅ Kata kunci benar! Sekarang klik tombol unduh — dijamin ga kabur lagi 😄
+    </div>
+  </div>
+
+  <div class="footer">
+    Dibuat dengan ❤️ oleh Anugerah Surya &nbsp;·&nbsp; v1.0.0 &nbsp;·&nbsp; 2025
+  </div>
+</div>
+
+<!-- ═══════════════════════════ HACKING OVERLAY ═══════════════════════════ -->
+<div id="hack-overlay">
+  <div class="hack-terminal">
+    <div class="hack-topbar">
+      <div class="hack-dot" style="background:#ff5f57"></div>
+      <div class="hack-dot" style="background:#febc2e"></div>
+      <div class="hack-dot" style="background:#28c840"></div>
+      <span class="hack-title">system32/cmd.exe — ADMINISTRATOR</span>
+    </div>
+    <div id="hack-log"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ TAPI BOONG OVERLAY ══════════════════════════ -->
+<div id="boong-overlay">
+  <img src="meme_tapiboong.png" alt="Tapi Boong" />
+  <div class="boong-text">TAPI BOONG 😂</div>
+  <p class="boong-sub">
+    Haha tenang, ga ada yang kena hack kok.<br>
+    Ituang aman, beneran deh. Selamat menggunakan! 🎉
+  </p>
+  <button id="btn-continue" onclick="window.location.reload()">
+    Oke balik ke download deh 😅
+  </button>
+</div>
+
+<script>
+  // ─── State ─────────────────────────────────────────────────────
+  let dodgeCount    = 0;
+  let secretShown   = false;
+  let unlocked      = false;
+  let dodgeTimer    = null;
+  const DODGE_LIMIT = 5;        // show secret after 5 dodges
+  const SECRET_KEY  = 'suryagans';
+
+  // ─── Dodgy button logic ────────────────────────────────────────
+  const btnDownload = document.getElementById('btn-download');
+  const btnWrap     = document.getElementById('btn-wrap');
+
+  btnDownload.addEventListener('mouseenter', () => {
+    if (unlocked) return;  // settled, don't dodge
+
+    dodgeCount++;
+    moveButton();
+
+    if (!secretShown && dodgeCount >= DODGE_LIMIT) {
+      secretShown = true;
+      setTimeout(() => {
+        document.getElementById('secret-section').style.display = 'block';
+      }, 300);
+    }
+  });
+
+  function moveButton() {
+    const wrap   = btnWrap.getBoundingClientRect();
+    const btn    = btnDownload.getBoundingClientRect();
+    const maxX   = wrap.width  - btn.width;
+    const maxY   = wrap.height - btn.height;
+
+    // Pick a random position that's far from center
+    let x, y;
+    do {
+      x = Math.random() * maxX;
+      y = Math.random() * maxY;
+    } while (Math.abs(x - maxX/2) < 60 && Math.abs(y - maxY/2) < 30);
+
+    btnDownload.style.left = (x + btn.width/2)  + 'px';
+    btnDownload.style.top  = (y + btn.height/2) + 'px';
+    btnDownload.style.transition = 'left 0.15s, top 0.15s';
+  }
+
+  function handleDownloadClick() {
+    if (!unlocked) return; // only works when settled
+    startDownload();
+  }
+
+  // ─── Secret keyword check ─────────────────────────────────────
+  document.getElementById('secret-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') checkSecret();
+  });
+
+  function checkSecret() {
+    const val  = document.getElementById('secret-input').value.trim().toLowerCase();
+    const hint = document.getElementById('secret-hint');
+
+    if (val === SECRET_KEY) {
+      unlocked = true;
+      settleButton();
+    } else {
+      const input = document.getElementById('secret-input');
+      input.classList.remove('wrong');
+      void input.offsetWidth;  // force reflow for re-trigger animation
+      input.classList.add('wrong');
+      hint.style.display = 'block';
+      setTimeout(() => hint.style.display = 'none', 3000);
+    }
+  }
+
+  function settleButton() {
+    // Remove the wrap, place button normally
+    btnDownload.classList.add('settled');
+    btnDownload.style.left = '';
+    btnDownload.style.top  = '';
+    btnDownload.style.transition = '';
+
+    const wrap = document.getElementById('btn-wrap');
+    wrap.style.height = 'auto';
+    wrap.appendChild(btnDownload);
+
+    document.getElementById('secret-section').style.display = 'none';
+    document.getElementById('success-msg').style.display    = 'block';
+    document.getElementById('dl-sub-text').textContent =
+      '✅ Terkunci. Sekarang klik tombol unduh di bawah!';
+  }
+
+  // ─── Download + trigger hack page ────────────────────────────
+  function startDownload() {
+    // Trigger actual file download
+    const a = document.createElement('a');
+    a.href = 'Ituang-Setup-1.0.0.exe';  // nama file installer
+    a.download = 'Ituang-Setup-1.0.0.exe';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+    // Show hacking page after short delay
+    setTimeout(() => startHackPage(), 1500);
+  }
+
+  // ─── Hacking page ────────────────────────────────────────────
+  const hackLines = [
+    { text: 'C:\\Users\\User> Ituang-Setup-1.0.0.exe /SILENT', cls: '' },
+    { text: '[*] Extracting payload...', cls: '' },
+    { text: '[*] Bypassing Windows Defender... ', cls: 'yellow' },
+    { text: '[+] Windows Defender: DISABLED ✓', cls: 'red' },
+    { text: '[*] Scanning system vulnerabilities...', cls: '' },
+    { text: '[+] Found 47 critical vulnerabilities', cls: 'red' },
+    { text: '[*] Injecting malware into system32...', cls: 'yellow' },
+    { text: 'PROGRESS: [====================] 0%', cls: 'hack-progress-line', isProgress: true },
+    { text: '[+] Keylogger installed successfully ✓', cls: 'red' },
+    { text: '[+] Ransomware payload activated ✓', cls: 'red' },
+    { text: '[*] Exfiltrating data...', cls: 'yellow' },
+    { text: '[+] Username: VICTIM', cls: 'cyan' },
+    { text: '[+] IP Address: 192.168.1.' + Math.floor(Math.random()*200+2), cls: 'cyan' },
+    { text: '[+] Sending data to remote server...', cls: 'yellow' },
+    { text: '[+] All your files are now encrypted 😈', cls: 'red' },
+    { text: '████████████████████████████████████████', cls: 'red' },
+    { text: '  YOUR LAPTOP HAS BEEN COMPROMISED  ', cls: 'white' },
+    { text: '████████████████████████████████████████', cls: 'red' },
+    { text: '', cls: '' },
+    { text: 'Send 1 BTC to: 1A1zP1eP5QGefi2DMPTfTL5SLmv7Divf...', cls: 'yellow' },
+    { text: '', cls: '' },
+  ];
+
+  function startHackPage() {
+    const overlay = document.getElementById('hack-overlay');
+    overlay.classList.add('active');
+    const log = document.getElementById('hack-log');
+    log.innerHTML = '';
+
+    let i = 0;
+    let progressInterval = null;
+    let progressVal = 0;
+
+    function printNextLine() {
+      if (i >= hackLines.length) {
+        // Show cursor then trigger boong after delay
+        const cursor = document.createElement('span');
+        cursor.className = 'hack-blink';
+        cursor.textContent = '█';
+        log.appendChild(cursor);
+        setTimeout(() => showBoong(), 4000);
+        return;
+      }
+
+      const item = hackLines[i++];
+
+      if (item.isProgress) {
+        // Create progress bar
+        const barWrap = document.createElement('div');
+        barWrap.className = 'hack-progress-bar';
+        const fill = document.createElement('div');
+        fill.className = 'hack-progress-fill';
+        fill.style.width = '0%';
+        barWrap.appendChild(fill);
+        log.appendChild(barWrap);
+
+        const txt = document.createElement('span');
+        txt.className = 'hack-line red';
+        txt.id = 'hack-progress-text';
+        log.appendChild(txt);
+
+        // Animate progress bar
+        progressVal = 0;
+        progressInterval = setInterval(() => {
+          progressVal += Math.random() * 8 + 2;
+          if (progressVal > 100) progressVal = 100;
+          fill.style.width = progressVal + '%';
+          txt.textContent = `Injecting payload... ${Math.floor(progressVal)}%`;
+          if (progressVal >= 100) {
+            clearInterval(progressInterval);
+            setTimeout(printNextLine, 400);
+          }
+        }, 120);
+        return;
+      }
+
+      const line = document.createElement('span');
+      line.className = 'hack-line ' + (item.cls || '');
+      line.textContent = item.text;
+      log.appendChild(line);
+      log.appendChild(document.createTextNode('\n'));
+      log.scrollTop = log.scrollHeight;
+
+      const delay = item.text === '' ? 100
+                  : item.text.includes('...') ? 700
+                  : item.cls === 'red' || item.cls === 'white' ? 500
+                  : 300;
+      setTimeout(printNextLine, delay);
+    }
+
+    printNextLine();
+  }
+
+  // ─── TAPI BOONG ───────────────────────────────────────────────
+  function showBoong() {
+    document.getElementById('hack-overlay').classList.remove('active');
+    document.getElementById('boong-overlay').classList.add('active');
+  }
+</script>
+</body>
+</html>
